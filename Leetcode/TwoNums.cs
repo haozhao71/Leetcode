@@ -20,60 +20,37 @@ namespace Leetcode
             this.secondNode = secondNode ?? throw new ArgumentNullException();
         }
 
-        
-
         public ListNode Add()
         {
-            ListNode prevNode = null;
-            ListNode currentNode = null;
+            ListNode headNode = new ListNode(0);
+            ListNode currentNode = headNode;
             int tempVal = 0;
-            int val;
-            while (firstNode != null && secondNode != null)
+            int sum;
+            while (firstNode != null || secondNode != null)
             {
-                val = firstNode.val + secondNode.val + tempVal;
-                tempVal = 0;
-                if (val >= 10)
+                sum = 0;
+                if(firstNode != null)
                 {
-                    val -= 10;
-                    tempVal = 1;
+                    sum += firstNode.val;
+                    firstNode = firstNode.next;
                 }
-                currentNode = new ListNode(val, prevNode);
-                prevNode = currentNode;
-                firstNode = firstNode.next;
-                secondNode = secondNode.next;
-            }
-            while (firstNode != null)
-            {
-                val = firstNode.val + tempVal;
-                tempVal = 0;
-                if (val >= 10)
+                if(secondNode != null)
                 {
-                    val -= 10;
-                    tempVal = 1;
+                    sum += secondNode.val;
+                    secondNode = secondNode.next;
                 }
-                currentNode = new ListNode(val, prevNode);
-                prevNode = currentNode;
-                firstNode = firstNode.next;
-                
-            }
-            while (secondNode != null)
-            {
-                val = firstNode.val + tempVal;
-                tempVal = 0;
-                if (val >= 10)
-                {
-                    val -= 10;
-                    tempVal = 1;
-                }
-                currentNode = new ListNode(val, prevNode);
-                prevNode = currentNode;
-                secondNode = secondNode.next;
+                sum += tempVal;
+
+                tempVal = sum / 10;
+                sum = sum % 10;
+                currentNode.next = new ListNode(sum);
+                currentNode = currentNode.next;
             }
             if (tempVal == 1)
             {
-                currentNode = new ListNode(tempVal, prevNode);
+                currentNode.next = new ListNode(tempVal);
             }
-            return currentNode.Reverse();
+            return headNode.next;
         }
     }
 }

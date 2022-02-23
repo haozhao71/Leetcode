@@ -64,9 +64,21 @@ namespace Leetcode.Tests
 
             TwoNums twoNums = new TwoNums(firstNode, secondNode);
 
-            var actual = twoNums.Add();
-            var _actual = actual.ToIntArray();
-            Assert.Equal(new ArrayList() {8,9,9,9,0,0,0,1 }, _actual);
+            var actual = twoNums.Add().ToIntArray();
+            Assert.Equal(new ArrayList() {8,9,9,9,0,0,0,1 }, actual);
+        }
+
+        [Fact]
+        public void Should_Return_Result_When_TwoNumsLength_Is_Not_Equal_2()
+        {
+            ListNode firstNode = new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, null))));
+            ListNode secondNode = new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9, null)))))));
+
+            TwoNums twoNums = new TwoNums(firstNode, secondNode);
+
+            var actual = twoNums.Add().ToIntArray();
+            //Assert.Equal(new ArrayList() { 8, 9, 9, 9, 0, 0, 0, 1 }, actual);
+            actual.Should().BeEquivalentTo(new ArrayList() { 8, 9, 9, 9, 0, 0, 0, 1 });
         }
     }
 
